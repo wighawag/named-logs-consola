@@ -1,0 +1,50 @@
+{
+  "name": "named-logs-consola",
+  "version": "0.0.1",
+  "description": "console logger using named-logs facade for minimal lib overhead and npm package 'consola' for display",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "author": "Ronan Sandford",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:wighawag/named-logs-consola.git"
+  },
+  "keywords": [
+    "console",
+    "logger",
+    "logging"
+  ],
+  "dependencies": {
+    "consola": "^2.15.3",
+    "named-logs": "0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^15.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "terser": "^5.7.0",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "prepare": "node .setup.js && npm run lint && npm run build",
+    "dev": "tsc -w -p tsconfig.json",
+    "build:esm": "rimraf dist/esm && tsc -p tsconfig.json",
+    "build:cjs": "rimraf dist/cjs && tsc -p tsconfig-cjs.json",
+    "build:umd": "rimraf dist/umd && tsc -p tsconfig-umd.json && terser dist/umd/index.js -c -m -o dist/umd/index.js",
+    "build:script-tag": "rimraf dist/script-tag && tsc -p tsconfig-script-tag.json && terser dist/script-tag/index.js -c -m -o dist/script-tag/index.js",
+    "build": "run-s build:*",
+    "lint": "eslint src/**/*.{js,ts,tsx} --quiet --fix"
+  }
+}
